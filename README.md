@@ -14,34 +14,17 @@ pip install git+https://github.com/hunkim/streamlit-google-oauth
 <img width="1070" alt="image" src="https://user-images.githubusercontent.com/901975/170388473-4664ce58-6a06-4237-9fbe-d88787f41c22.png">
 
 
-## Put client id, etc. in env
-Put in the .env file
-```bash
-~/streamlit-google-oauth$ cat .env 
-GOOGLE_CLIENT_ID=767025784452-fscnojvddiek...
-GOOGLE_CLIENT_SECRET=GOCSPX-KE4_...
-GOOGLE_REDIRECT_URI=http://localhost:8080
-```
+## Put client id, etc. in st.secrets
 
-or 
-```bash
-export GOOGLE_CLIENT_ID="xxx"
-export GOOGLE_CLIENT_SECRET="yyy"
-export GOOGLE_REDIRECT_URI="http://localhost:8080"
-```
 
 ## Add login in your streamlit app
 ```python
 import streamlit as st
-import os
-from dotenv import load_dotenv
 import streamlit_google_oauth as oauth
 
-load_dotenv()
-client_id = os.environ["GOOGLE_CLIENT_ID"]
-client_secret = os.environ["GOOGLE_CLIENT_SECRET"]
-redirect_uri = os.environ["GOOGLE_REDIRECT_URI"]
-
+client_id = st.secrets["GOOGLE_CLIENT_ID"]
+client_secret = st.secrets["GOOGLE_CLIENT_SECRET"]
+redirect_uri = st.secrets["GOOGLE_REDIRECT_URI"]
 
 if __name__ == "__main__":
     login_info = oauth.login(
