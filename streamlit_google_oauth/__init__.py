@@ -56,7 +56,7 @@ def logout_button(button_text):
         st.session_state.user_email = None
         st.session_state.user_id = None
         st.session_state.token = None
-        st.experimental_rerun()
+        st.rerun()
 
 
 def login(
@@ -79,7 +79,7 @@ def login(
 
     if st.session_state.token is None:
         try:
-            code = st.experimental_get_query_params()["code"]
+            code = st.get_query_params()["code"]
         except:
             login_button(authorization_url, app_name, app_desc)
         else:
