@@ -5,10 +5,10 @@ from httpx_oauth.clients.google import GoogleOAuth2
 __version__ = "0.1"
 
 
-async def write_authorization_url(client, redirect_uri):
+async def write_authorization_url(client, redirect_uri, scope):
     authorization_url = await client.get_authorization_url(
         redirect_uri,
-        scope=["profile", "email"],
+        scope=scope,
         extras_params={"access_type": "offline"},
     )
     return authorization_url
@@ -66,11 +66,12 @@ def login(
     app_name="Continue with Google",
     app_desc="",
     logout_button_text="Logout",
+    scope=["profile", "email"]
 ):
     st.session_state.client = GoogleOAuth2(client_id, client_secret)
     authorization_url = asyncio.run(
         write_authorization_url(
-            client=st.session_state.client, redirect_uri=redirect_uri
+            client=st.session_state.client, redirect_uri=redirect_uri, scope=scope
         )
     )
     app_desc
