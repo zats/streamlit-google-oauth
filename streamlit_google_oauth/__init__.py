@@ -33,10 +33,12 @@ def login_button(authorization_url, app_name, app_desc):
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">''',
     unsafe_allow_html=True)
 
-    container = f'''
-    <div class="container-fluid border py-4 px-4 border-primary">
-        <h5><strong>{app_name}</strong></h5>
-        <p>{app_desc}</p>
+    container = '<div class="container-fluid border py-4 px-4 border-primary">'
+    if app_name is not None:
+        container += "<h5><strong>{app_name}</strong></h5>"
+    if app_desc is not None:
+        container += "<p>{app_desc}</p>"
+    container += f'''
         <a target="_self" href="{authorization_url}">
             <img class="img-fluid" src="https://i.imgur.com/YTxsnUl.png" alt="streamlit">
         </a>
