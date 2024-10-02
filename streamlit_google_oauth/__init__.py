@@ -6,6 +6,15 @@ __version__ = "0.1"
 
 
 async def write_authorization_url(client, redirect_uri, scope):
+    if scope is None:
+        scope = []
+    if "profile" not in scope:
+        scope.append("profile")
+    if "email" not in scope:
+        scope.append("email")
+
+    print(f"Oh hey there! scope: {scope}")
+    
     authorization_url = await client.get_authorization_url(
         redirect_uri,
         scope=scope,
