@@ -13,8 +13,6 @@ async def write_authorization_url(client, redirect_uri, scope):
     if "email" not in scope:
         scope.append("email")
 
-    print(f"Oh hey there! scope: {scope}")
-    
     authorization_url = await client.get_authorization_url(
         redirect_uri,
         scope=scope,
@@ -42,7 +40,7 @@ def login_button(authorization_url, app_name, app_desc):
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">''',
     unsafe_allow_html=True)
 
-    container = '<div class="container-fluid border py-4 px-4 border-primary">'
+    container = '<div class="container-fluid">'
     if app_name is not None:
         container += "<h5><strong>{app_name}</strong></h5>"
     if app_desc is not None:
@@ -112,13 +110,13 @@ def login(
                     login_button(authorization_url, app_name, app_desc)
                 else:
                     st.session_state.token = token
-                    st.session_state.user_id, st.session_state.user_email = asyncio.run(
-                        get_user_info(
-                            client=st.session_state.client, token=token["access_token"]
-                        )
-                    )
+                    # st.session_state.user_id, st.session_state.user_email = asyncio.run(
+                    #     get_user_info(
+                    #         client=st.session_state.client, token=token["access_token"]
+                    #     )
+                    # )
                     logout_button(button_text=logout_button_text)
-                    return (st.session_state.user_id, st.session_state.user_email)
+                    return token
     else:
         logout_button(button_text=logout_button_text)
         return (st.session_state.user_id, st.session_state.user_email)
