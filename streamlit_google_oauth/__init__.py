@@ -110,13 +110,8 @@ def login(
                     login_button(authorization_url, app_name, app_desc)
                 else:
                     st.session_state.token = token
-                    # st.session_state.user_id, st.session_state.user_email = asyncio.run(
-                    #     get_user_info(
-                    #         client=st.session_state.client, token=token["access_token"]
-                    #     )
-                    # )
                     logout_button(button_text=logout_button_text)
                     return token
     else:
         logout_button(button_text=logout_button_text)
-        return (st.session_state.user_id, st.session_state.user_email)
+        return st.session_state.token
